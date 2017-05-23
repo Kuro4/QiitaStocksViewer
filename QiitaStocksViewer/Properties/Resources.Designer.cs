@@ -61,11 +61,92 @@ namespace QiitaStocksViewer.Properties {
         }
         
         /// <summary>
+        ///   読込開始 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ButtonContent_LoadStart {
+            get {
+                return ResourceManager.GetString("ButtonContent_LoadStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ユーザーIDを記憶する に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string CheckBox_isSave {
+            get {
+                return ResourceManager.GetString("CheckBox_isSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   限定共有 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ColumnHeaderName_limitedShare {
+            get {
+                return ResourceManager.GetString("ColumnHeaderName_limitedShare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   投稿日 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ColumnHeaderName_post {
+            get {
+                return ResourceManager.GetString("ColumnHeaderName_post", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ストック者数 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ColumnHeaderName_stockCount {
+            get {
+                return ResourceManager.GetString("ColumnHeaderName_stockCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タイトル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ColumnHeaderName_title {
+            get {
+                return ResourceManager.GetString("ColumnHeaderName_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最終更新日 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ColumnHeaderName_update {
+            get {
+                return ResourceManager.GetString("ColumnHeaderName_update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   URL に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ColumnHeaderName_url {
+            get {
+                return ResourceManager.GetString("ColumnHeaderName_url", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ユーザーID： に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string title_UserID {
             get {
                 return ResourceManager.GetString("title_UserID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   QiitaStockViewer に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string WindowTitle {
+            get {
+                return ResourceManager.GetString("WindowTitle", resourceCulture);
             }
         }
     }

@@ -24,5 +24,44 @@ namespace QiitaStocksViewer
         {
             InitializeComponent();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var settings = Properties.Settings.Default;
+            this.Height = settings.Window_Heght;
+            this.Width = settings.Window_Width;
+            this.Top = settings.Window_Top;
+            this.Left = settings.Window_Left;
+            this.WindowState = (WindowState)settings.Window_State;
+            this.CheckBox_isSaveUserID.IsChecked = settings.isSaveUserID;
+            this.TextBox_UserID.Text = settings.UserID;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var settings = Properties.Settings.Default;
+            settings.Window_Heght = this.Height;
+            settings.Window_Width = this.Width;
+            settings.Window_Top = this.Top;
+            settings.Window_Left = this.Left;
+            if (this.WindowState != WindowState.Minimized)
+            {
+                settings.Window_State = (int)this.WindowState;
+            }
+            else
+            {
+                settings.Window_State = 0;
+            }
+            settings.isSaveUserID = this.CheckBox_isSaveUserID.IsChecked.Value;
+            if (this.CheckBox_isSaveUserID.IsChecked.Value)
+            {
+                settings.UserID = this.TextBox_UserID.Text;
+            }
+            else
+            {
+                settings.UserID = "";
+            }
+            settings.Save();
+        }
     }
 }

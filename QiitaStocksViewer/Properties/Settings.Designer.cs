@@ -26,12 +26,84 @@ namespace QiitaStocksViewer.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string value_UserID {
+        public string UserID {
             get {
-                return ((string)(this["value_UserID"]));
+                return ((string)(this["UserID"]));
             }
             set {
-                this["value_UserID"] = value;
+                this["UserID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isSaveUserID {
+            get {
+                return ((bool)(this["isSaveUserID"]));
+            }
+            set {
+                this["isSaveUserID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("625")]
+        public double Window_Width {
+            get {
+                return ((double)(this["Window_Width"]));
+            }
+            set {
+                this["Window_Width"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public double Window_Heght {
+            get {
+                return ((double)(this["Window_Heght"]));
+            }
+            set {
+                this["Window_Heght"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double Window_Top {
+            get {
+                return ((double)(this["Window_Top"]));
+            }
+            set {
+                this["Window_Top"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double Window_Left {
+            get {
+                return ((double)(this["Window_Left"]));
+            }
+            set {
+                this["Window_Left"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Window_State {
+            get {
+                return ((int)(this["Window_State"]));
+            }
+            set {
+                this["Window_State"] = value;
             }
         }
     }

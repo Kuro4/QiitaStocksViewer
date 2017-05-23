@@ -117,7 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ColumnHeaderName_limitedShare" xml:space="preserve">
+    <value>限定共有</value>
+  </data>
+  <data name="ColumnHeaderName_post" xml:space="preserve">
+    <value>投稿日</value>
+  </data>
+  <data name="ColumnHeaderName_stockCount" xml:space="preserve">
+    <value>ストック者数</value>
+  </data>
+  <data name="ColumnHeaderName_title" xml:space="preserve">
+    <value>タイトル</value>
+  </data>
+  <data name="ColumnHeaderName_update" xml:space="preserve">
+    <value>最終更新日</value>
+  </data>
+  <data name="ColumnHeaderName_url" xml:space="preserve">
+    <value>URL</value>
+  </data>
   <data name="title_UserID" xml:space="preserve">
     <value>ユーザーID：</value>
+  </data>
+  <data name="WindowTitle" xml:space="preserve">
+    <value>QiitaStockViewer</value>
+  </data>
+  <data name="ButtonContent_LoadStart" xml:space="preserve">
+    <value>読込開始</value>
+  </data>
+  <data name="CheckBox_isSave" xml:space="preserve">
+    <value>ユーザーIDを記憶する</value>
   </data>
 </root>

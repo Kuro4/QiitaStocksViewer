@@ -5,32 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QiitaStocksViewer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="825">
+        Title="{Binding WindowTitle, Mode=OneWay, Source={StaticResource resources}}" Height="500" Width="625" Loaded="Window_Loaded" Closing="Window_Closing">
     <Window.DataContext>
         <local:ViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="4*"/>
+            <RowDefinition Height="100*" MaxHeight="100" MinHeight="100"/>
+            <RowDefinition Height="400*"/>
         </Grid.RowDefinitions>
-        <UniformGrid>
-            <TextBlock TextWrapping="Wrap" Text="{Binding title_UserID, Mode=OneWay, Source={StaticResource resources}}"><Run Text="TextBlock"/></TextBlock>
-            <TextBox TextWrapping="Wrap"/>
-            <Button Content="Button" Command="{Binding _Model.C_GetPostList, Mode=OneWay}"/>
-        </UniformGrid>
-        <ListView Grid.Row="1" ItemsSource="{Binding _Model._PostList}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding _Title}" Header="タイトル"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding _PostTime}" Header="投稿日時"/>
-                    <GridViewColumn Header="最終更新日時" DisplayMemberBinding="{Binding _UpDatedTime}"/>
-                    <GridViewColumn Header="限定共有" DisplayMemberBinding="{Binding _LimitedShared}"/>
-                    <GridViewColumn Header="URL" DisplayMemberBinding="{Binding _URL}"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding _StockCount}" Header="ストック者数"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <StackPanel Margin="0,28,0,0" >
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock x:Name="TextBlock_UserID" TextWrapping="Wrap" FontSize="16" Text="{Binding title_UserID, Mode=OneWay, Source={StaticResource resources}}"/>
+                <TextBox x:Name="TextBox_UserID" TextWrapping="Wrap" FontSize="16" Width="200" Text="{Binding _Model._UserID.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <CheckBox x:Name="CheckBox_isSaveUserID" Content="{Binding CheckBox_isSave, Mode=OneWay, Source={StaticResource resources}}" VerticalContentAlignment="Center" HorizontalAlignment="Right" HorizontalContentAlignment="Right" Margin="0,0,0,5" IsChecked="{Binding _Model._isSaveUserID.Value}"/>
+            <Button Content="{Binding ButtonContent_LoadStart, Mode=OneWay, Source={StaticResource resources}}" Command="{Binding _Model.C_GetPostList, Mode=OneWay}" FontSize="16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Background="#FF54FF54"/>
+        </StackPanel>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding _Model._PostList}" AutoGenerateColumns="False" HeadersVisibility="Column">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding _Title}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_title, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding _StockInfo._StockCount.Value}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_stockCount, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True"/>
+                <DataGridHyperlinkColumn Binding="{Binding _URL}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_url, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding _PostTime}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_post, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding _UpDatedTime}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_update, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True"/>
+                <DataGridCheckBoxColumn Binding="{Binding _LimitedShared}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_limitedShare, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
     </Grid>
 </Window>
