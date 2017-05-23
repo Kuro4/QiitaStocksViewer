@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QiitaStocksViewer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="700" Width="825">
+    <Window.DataContext>
+        <local:ViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -14,12 +17,17 @@
         <UniformGrid>
             <TextBlock TextWrapping="Wrap" Text="{Binding title_UserID, Mode=OneWay, Source={StaticResource resources}}"><Run Text="TextBlock"/></TextBlock>
             <TextBox TextWrapping="Wrap"/>
+            <Button Content="Button" Command="{Binding _Model.C_GetPostList, Mode=OneWay}"/>
         </UniformGrid>
-
-        <ListView Grid.Row="1">
+        <ListView Grid.Row="1" ItemsSource="{Binding _Model._PostList}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn DisplayMemberBinding="{Binding _Title}" Header="タイトル"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding _PostTime}" Header="投稿日時"/>
+                    <GridViewColumn Header="最終更新日時" DisplayMemberBinding="{Binding _UpDatedTime}"/>
+                    <GridViewColumn Header="限定共有" DisplayMemberBinding="{Binding _LimitedShared}"/>
+                    <GridViewColumn Header="URL" DisplayMemberBinding="{Binding _URL}"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding _StockCount}" Header="ストック者数"/>
                 </GridView>
             </ListView.View>
         </ListView>
