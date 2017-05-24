@@ -61,6 +61,16 @@ namespace QiitaStocksViewer.Properties {
         }
         
         /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        public static System.Drawing.Icon AppIcon {
+            get {
+                object obj = ResourceManager.GetObject("AppIcon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   読込開始 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ButtonContent_LoadStart {
@@ -70,11 +80,29 @@ namespace QiitaStocksViewer.Properties {
         }
         
         /// <summary>
+        ///   CSVファイルに出力する に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ButtonContent_OutputCSV {
+            get {
+                return ResourceManager.GetString("ButtonContent_OutputCSV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ユーザーIDを記憶する に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string CheckBox_isSave {
             get {
                 return ResourceManager.GetString("CheckBox_isSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アクセストークンを記憶する に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string CheckBox_isSaveAccessToken {
+            get {
+                return ResourceManager.GetString("CheckBox_isSaveAccessToken", resourceCulture);
             }
         }
         
@@ -129,6 +157,15 @@ namespace QiitaStocksViewer.Properties {
         public static string ColumnHeaderName_url {
             get {
                 return ResourceManager.GetString("ColumnHeaderName_url", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アクセストークン： に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string title_AccessToken {
+            get {
+                return ResourceManager.GetString("title_AccessToken", resourceCulture);
             }
         }
         

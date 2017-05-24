@@ -106,5 +106,29 @@ namespace QiitaStocksViewer.Properties {
                 this["Window_State"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AccessToken {
+            get {
+                return ((string)(this["AccessToken"]));
+            }
+            set {
+                this["AccessToken"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isSaveAccessToken {
+            get {
+                return ((bool)(this["isSaveAccessToken"]));
+            }
+            set {
+                this["isSaveAccessToken"] = value;
+            }
+        }
     }
 }

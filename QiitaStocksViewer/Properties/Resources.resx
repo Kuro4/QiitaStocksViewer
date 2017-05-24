@@ -147,4 +147,17 @@
   <data name="CheckBox_isSave" xml:space="preserve">
     <value>ユーザーIDを記憶する</value>
   </data>
+  <data name="ButtonContent_OutputCSV" xml:space="preserve">
+    <value>CSVファイルに出力する</value>
+  </data>
+  <data name="CheckBox_isSaveAccessToken" xml:space="preserve">
+    <value>アクセストークンを記憶する</value>
+  </data>
+  <data name="title_AccessToken" xml:space="preserve">
+    <value>アクセストークン：</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="AppIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AppIcon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

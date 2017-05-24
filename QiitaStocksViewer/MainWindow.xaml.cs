@@ -34,7 +34,9 @@ namespace QiitaStocksViewer
             this.Left = settings.Window_Left;
             this.WindowState = (WindowState)settings.Window_State;
             this.CheckBox_isSaveUserID.IsChecked = settings.isSaveUserID;
+            this.CheckBox_isSaveAccessToken.IsChecked = settings.isSaveAccessToken;
             this.TextBox_UserID.Text = settings.UserID;
+            this.TextBox_AccessToken.Text = settings.AccessToken;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -60,6 +62,15 @@ namespace QiitaStocksViewer
             else
             {
                 settings.UserID = "";
+            }
+            settings.isSaveAccessToken = this.CheckBox_isSaveAccessToken.IsChecked.Value;
+            if(this.CheckBox_isSaveAccessToken.IsChecked.Value)
+            {
+                settings.AccessToken = this.TextBox_AccessToken.Text;
+            }
+            else
+            {
+                settings.AccessToken = "";
             }
             settings.Save();
         }
