@@ -139,7 +139,7 @@
     <value>ユーザーID：</value>
   </data>
   <data name="WindowTitle" xml:space="preserve">
-    <value>QiitaStockViewer</value>
+    <value>QiitaStocksViewer</value>
   </data>
   <data name="ButtonContent_LoadStart" xml:space="preserve">
     <value>読込開始</value>
