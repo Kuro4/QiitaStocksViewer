@@ -24,20 +24,9 @@ namespace QiitaStocksViewer
     {
         public ReactiveProperty<string> _UserID { get; set; } = new ReactiveProperty<string>();
         public string _AccessToken { get; set; }
-        public ReactiveCollection<PostInformation> _PostList { get;} = new ReactiveCollection<PostInformation>();
-        public ReactiveCommand C_GetPostList { get; } = new ReactiveCommand();
-        public ReactiveCommand C_OutputToCSV { get; } = new ReactiveCommand();
+        public ReactiveCollection<PostInformation> _PostList { get; set; } = new ReactiveCollection<PostInformation>();
 
-        public Model()
-        {
-            C_GetPostList = _UserID
-                .Select(x => !string.IsNullOrWhiteSpace(x))
-                .ToReactiveCommand();
-            C_GetPostList.Subscribe(LoadFromQiita);
-            C_OutputToCSV.Subscribe(OutputToCSV);
-        }
-
-        private async void LoadFromQiita()
+        public async void LoadFromQiita()
         {
             if (!string.IsNullOrWhiteSpace(_UserID.Value))
             {
@@ -89,7 +78,7 @@ namespace QiitaStocksViewer
             return DateTime.Parse(dateTime, null, System.Globalization.DateTimeStyles.RoundtripKind);
         }
 
-        private void OutputToCSV()
+        public void OutputToCSV()
         {
             if (_PostList.Count != 0)
             {
@@ -145,7 +134,7 @@ namespace QiitaStocksViewer
         e_url,
         e_user,
     }
-
+    
     public class JsonKeysEx
     {
         public static string getKeyName(JsonKeys key)

@@ -12,7 +12,7 @@
         Loaded="Window_Loaded"
         Closing="Window_Closing">
     <Window.DataContext>
-        <local:ViewModel/>
+        <local:ViewModel2/>
     </Window.DataContext>
     <Window.Resources>
         <Style TargetType="DataGridColumnHeader">
@@ -32,17 +32,17 @@
         <StackPanel x:Name="stackPanel1" >
             <StackPanel x:Name="stackPanel2" Orientation="Horizontal" Margin="0,20,0,0" HorizontalAlignment="Center">
                 <TextBlock x:Name="TextBlock_UserID" FontSize="16" Text="{Binding title_UserID, Mode=OneWay, Source={StaticResource resources}}" VerticalAlignment="Center" Width="126" HorizontalAlignment="Center" TextAlignment="Right"/>
-                <TextBox x:Name="TextBox_UserID" TextWrapping="Wrap" FontSize="14" Width="200" Text="{Binding _Model._UserID.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                <TextBox x:Name="TextBox_UserID" TextWrapping="Wrap" FontSize="14" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0,0,0" Text="{Binding _UserID.Value}"/>
                 <CheckBox x:Name="CheckBox_isSaveUserID" Content="{Binding CheckBox_isSave, Mode=OneWay, Source={StaticResource resources}}" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="70,0,0,0" Width="173" HorizontalAlignment="Center"/>
             </StackPanel>
             <StackPanel x:Name="stackPanel3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
                 <TextBlock x:Name="TextBlock_AccessToken" FontSize="14" Text="{Binding title_AccessToken, Mode=OneWay, Source={StaticResource resources}}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="126" TextAlignment="Right"/>
-                <TextBox x:Name="TextBox_AccessToken" TextWrapping="Wrap" FontSize="14" Text="{Binding _Model._AccessToken}" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                <TextBox x:Name="TextBox_AccessToken" TextWrapping="Wrap" FontSize="14" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0,0,0" Text="{Binding _AccessToken}"/>
                 <CheckBox x:Name="CheckBox_isSaveAccessToken" Content="{Binding CheckBox_isSaveAccessToken, Mode=OneWay, Source={StaticResource resources}}" VerticalContentAlignment="Center" Margin="70,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="173"/>
             </StackPanel>
-            <Button x:Name="Button_LoadStart" Content="{Binding ButtonContent_LoadStart, Mode=OneWay, Source={StaticResource resources}}" Command="{Binding _Model.C_GetPostList, Mode=OneWay}" FontSize="16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Background="#FF54FF54" Margin="0,20,0,0"/>
+            <Button x:Name="Button_LoadStart" Content="{Binding ButtonContent_LoadStart, Mode=OneWay, Source={StaticResource resources}}"  FontSize="16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Background="#FF54FF54" Margin="0,20,0,0" Command="{Binding C_GetPostList, Mode=OneWay}"/>
         </StackPanel>
-        <DataGrid x:Name="dataGrid" Grid.Row="1" ItemsSource="{Binding _Model._PostList}" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" AlternatingRowBackground="#FFA5F9A1" SelectionUnit="CellOrRowHeader" RowHeaderWidth="40">
+        <DataGrid x:Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" AlternatingRowBackground="#FFA5F9A1" SelectionUnit="CellOrRowHeader" RowHeaderWidth="40" ItemsSource="{Binding _PostList}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding _Title}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_title, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True">
                     <DataGridTextColumn.CellStyle>
@@ -86,6 +86,6 @@
                 <DataGridCheckBoxColumn Binding="{Binding _LimitedShared}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_limitedShare, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="{Binding ButtonContent_OutputCSV, Mode=OneWay, Source={StaticResource resources}}" Grid.Row="2" Command="{Binding _Model.C_OutputToCSV, Mode=OneWay}" FontSize="16"/>
+        <Button Content="{Binding ButtonContent_OutputCSV, Mode=OneWay, Source={StaticResource resources}}" Grid.Row="2"  FontSize="16" Command="{Binding C_OutputToCSV, Mode=OneWay}"/>
     </Grid>
 </Window>

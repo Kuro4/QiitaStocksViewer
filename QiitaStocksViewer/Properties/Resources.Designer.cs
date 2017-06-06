@@ -179,7 +179,7 @@ namespace QiitaStocksViewer.Properties {
         }
         
         /// <summary>
-        ///   QiitaStockViewer に類似しているローカライズされた文字列を検索します。
+        ///   QiitaStocksViewer に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string WindowTitle {
             get {
