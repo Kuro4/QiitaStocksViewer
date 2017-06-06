@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QiitaStocksViewer"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="{Binding WindowTitle, Mode=OneWay, Source={StaticResource resources}}"
         Height="500"
@@ -44,17 +43,11 @@
         </StackPanel>
         <DataGrid x:Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" AlternatingRowBackground="#FFA5F9A1" SelectionUnit="CellOrRowHeader" RowHeaderWidth="40" ItemsSource="{Binding _PostList}">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding _Title}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_title, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True">
-                    <DataGridTextColumn.CellStyle>
-                        <Style TargetType="DataGridCell">
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.CellStyle>
-                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding _Title}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_title, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True"/>
                 <DataGridTemplateColumn Header="{Binding ColumnHeaderName_stockCount, Mode=OneWay, Source={StaticResource resources}}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <StackPanel>
                                 <Button Content="{Binding _StockInfo._StockCount.Value}" FontSize="14" Command="{Binding C_PopupChange}" Background="White" BorderThickness="0" BorderBrush="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                 <Popup IsOpen="{Binding _isPopupOpen.Value}" StaysOpen="False">
                                     <DataGrid ItemsSource="{Binding _StockInfo._StockedPerson}" AutoGenerateColumns="False" GridLinesVisibility="None" HeadersVisibility="None" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" >
@@ -63,24 +56,11 @@
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </Popup>
-                            </Grid>
+                            </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="{Binding ColumnHeaderName_url, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Label HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-                                <Hyperlink>
-                                    <i:Interaction.Behaviors>
-                                        <local:HyperlinkBehavior uri="{Binding _URL}"/>
-                                    </i:Interaction.Behaviors>
-                                    <TextBlock Text="{Binding _URL}"/>
-                                </Hyperlink>
-                            </Label>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                <DataGridHyperlinkColumn Binding="{Binding _URL}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_url, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding _PostTime}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_post, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding _UpDatedTime}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_update, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True"/>
                 <DataGridCheckBoxColumn Binding="{Binding _LimitedShared}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_limitedShare, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True"/>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -74,16 +73,6 @@ namespace QiitaStocksViewer
                 settings.AccessToken = "";
             }
             settings.Save();
-        }
-
-        private void Hyperlink_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Hyperlink link = (Hyperlink)e.OriginalSource;
-                Process.Start(link.NavigateUri.AbsoluteUri);
-            }
-            catch (Exception) { }
         }
     }
 }
