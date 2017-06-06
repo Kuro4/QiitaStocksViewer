@@ -42,7 +42,7 @@
             </StackPanel>
             <Button x:Name="Button_LoadStart" Content="{Binding ButtonContent_LoadStart, Mode=OneWay, Source={StaticResource resources}}"  FontSize="16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Background="#FF54FF54" Margin="0,20,0,0" Command="{Binding _Model.C_GetPostList, Mode=OneWay}"/>
         </StackPanel>
-        <DataGrid x:Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" AlternatingRowBackground="#FFA5F9A1" SelectionUnit="CellOrRowHeader" RowHeaderWidth="40" ItemsSource="{Binding _PostList}">
+        <DataGrid x:Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" AlternatingRowBackground="#FFA5F9A1" SelectionUnit="CellOrRowHeader" RowHeaderWidth="40" ItemsSource="{Binding _Model._PostList}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding _Title}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_title, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True">
                     <DataGridTextColumn.CellStyle>

@@ -14,7 +14,7 @@ namespace QiitaStocksViewer
 {
     class HyperlinkBehavior:Behavior<Hyperlink>
     {
-        #region メッセージプロパティ
+        #region uriプロパティ
         public Uri uri
         {
             get
