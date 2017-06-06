@@ -24,9 +24,18 @@ namespace QiitaStocksViewer
     {
         public ReactiveProperty<string> _UserID { get; set; } = new ReactiveProperty<string>();
         public string _AccessToken { get; set; }
-        public ReactiveCollection<PostInformation> _PostList { get; set; } = new ReactiveCollection<PostInformation>();
-
-        public async void LoadFromQiita()
+        public ReactiveCollection<PostInformation> _PostList { get; } = new ReactiveCollection<PostInformation>();
+        public ReactiveCommand C_GetPostList { get; } = new ReactiveCommand();
+        public ReactiveCommand C_OutputToCSV { get; } = new ReactiveCommand();
+        public Model()
+        {
+            C_GetPostList = _UserID
+                .Select(x => !string.IsNullOrWhiteSpace(x))
+                .ToReactiveCommand();
+            C_GetPostList.Subscribe(LoadFromQiita);
+            C_OutputToCSV.Subscribe(OutputToCSV);
+        }
+        private async void LoadFromQiita()
         {
             if (!string.IsNullOrWhiteSpace(_UserID.Value))
             {
@@ -64,21 +73,19 @@ namespace QiitaStocksViewer
                         });
                     }
                 }
-                catch(HttpRequestException e)
+                catch (HttpRequestException e)
                 {
                     MessageBox.Show("エラーが発生しました" + Environment.NewLine
-                        + "ユーザーID,AccessTokenが間違っているか、リクエスト制限を超えた可能性があります"　+ Environment.NewLine
+                        + "ユーザーID,AccessTokenが間違っているか、リクエスト制限を超えた可能性があります" + Environment.NewLine
                         + "（リクエスト回数はIPアドレス毎に \n　認証無：60回/h \n　認証有：1000回/h \n　までです）", e.GetType().ToString());
                 }
             }
         }
-
         private DateTime ISO8601ToDateTime(string dateTime)
         {
             return DateTime.Parse(dateTime, null, System.Globalization.DateTimeStyles.RoundtripKind);
         }
-
-        public void OutputToCSV()
+        private void OutputToCSV()
         {
             if (_PostList.Count != 0)
             {
@@ -92,7 +99,7 @@ namespace QiitaStocksViewer
                     {
                         str += postInfo._Title + ",";
                         str += postInfo._StockInfo._StockCount.Value + ",\"";
-                        foreach(var item in postInfo._StockInfo._StockedPerson)
+                        foreach (var item in postInfo._StockInfo._StockedPerson)
                         {
                             str += item + ",";
                         }
@@ -112,13 +119,12 @@ namespace QiitaStocksViewer
                     catch (Exception e)
                     {
                         MessageBox.Show("エラーが発生しました" + Environment.NewLine
-                            + "ファイルの保存に失敗しました",e.GetType().ToString());
+                            + "ファイルの保存に失敗しました", e.GetType().ToString());
                     }
                 }
             }
         }
     }
-
     public enum JsonKeys
     {
         e_renderd_body,
@@ -134,7 +140,6 @@ namespace QiitaStocksViewer
         e_url,
         e_user,
     }
-    
     public class JsonKeysEx
     {
         public static string getKeyName(JsonKeys key)
@@ -142,47 +147,41 @@ namespace QiitaStocksViewer
             return key.ToString().Remove(0, 2);
         }
     }
-
     public class PostInformation
     {
-        public string _Title { get;  set; }
-        public DateTime _PostTime { get;  set; } = new DateTime();
-        public DateTime _UpDatedTime { get;  set; } = new DateTime();
-        public bool _LimitedShared { get;  set; }
+        public string _Title { get; set; }
+        public DateTime _PostTime { get; set; } = new DateTime();
+        public DateTime _UpDatedTime { get; set; } = new DateTime();
+        public bool _LimitedShared { get; set; }
         public Uri _URL { get; set; }
         public StockInformation _StockInfo { get; set; }
-        public ReactiveProperty<bool> _isPopupOpen { get;private set; } = new ReactiveProperty<bool>() { Value = false };
+        public ReactiveProperty<bool> _isPopupOpen { get; private set; } = new ReactiveProperty<bool>() { Value = false };
         public ReactiveCommand C_PopupChange { get; } = new ReactiveCommand();
-
         public PostInformation()
         {
-            C_PopupChange.Subscribe(_=>_isPopupOpen.Value = !_isPopupOpen.Value);
+            C_PopupChange.Subscribe(_ => _isPopupOpen.Value = !_isPopupOpen.Value);
         }
-
         public class StockInformation
         {
-            public string _PostID { get;}
-            public ReactiveProperty<int> _StockCount { get;private set; } = new ReactiveProperty<int>();
-            public ReactiveCollection<string> _StockedPerson { get;private set; } = new ReactiveCollection<string>();
-
+            public string _PostID { get; }
+            public ReactiveProperty<int> _StockCount { get; private set; } = new ReactiveProperty<int>();
+            public ReactiveCollection<string> _StockedPerson { get; private set; } = new ReactiveCollection<string>();
             public StockInformation(string PostID)
             {
                 _PostID = PostID;
                 getStockInfo();
             }
-
             private async void getStockInfo()
             {
                 Uri uri = new Uri("https://qiita.com/api/v2/items/" + _PostID + "/stockers");
-                var result =await new HttpClient().GetStringAsync(uri);
+                var result = await new HttpClient().GetStringAsync(uri);
                 JArray data = (JArray)JsonConvert.DeserializeObject(result);
                 foreach (JObject item in data)
                 {
                     _StockCount.Value++;
                     _StockedPerson.Add(item[JsonKeysEx.getKeyName(JsonKeys.e_id)].ToString());
                 }
-            } 
+            }
         }
-
     }
 }
