@@ -18,6 +18,9 @@
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
         </Style>
+        <Style TargetType="DataGridCell">
+            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+        </Style>
     </Window.Resources>
     <Window.Icon>
         <Binding Mode="OneWay" Path="AppIcon" Source="{StaticResource resources}"/>
@@ -45,13 +48,13 @@
         <DataGrid x:Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" AlternatingRowBackground="#FFA5F9A1" SelectionUnit="CellOrRowHeader" RowHeaderWidth="40" ItemsSource="{Binding _Model._PostList}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding _Title}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_title, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True">
-                    <DataGridTextColumn.CellStyle>
-                        <Style TargetType="DataGridCell">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
                             <Setter Property="VerticalAlignment" Value="Center"/>
                         </Style>
-                    </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTemplateColumn Header="{Binding ColumnHeaderName_stockCount, Mode=OneWay, Source={StaticResource resources}}">
+                <DataGridTemplateColumn Header="{Binding ColumnHeaderName_stockCount, Mode=OneWay, Source={StaticResource resources}}" SortMemberPath="_StockInfo._StockCount">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Grid>
@@ -67,7 +70,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="{Binding ColumnHeaderName_url, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True">
+                <DataGridTemplateColumn Header="{Binding ColumnHeaderName_url, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True" CanUserSort="True" SortMemberPath="_URL.AbsoluteUri">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Label HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
@@ -81,11 +84,30 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Binding="{Binding _PostTime}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_post, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True"/>
-                <DataGridTextColumn Binding="{Binding _UpDatedTime}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_update, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True"/>
-                <DataGridCheckBoxColumn Binding="{Binding _LimitedShared}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_limitedShare, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding _PostTime}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_post, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding _UpDatedTime}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_update, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridCheckBoxColumn Binding="{Binding _LimitedShared}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_limitedShare, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True">
+                    <DataGridCheckBoxColumn.ElementStyle>
+                        <Style TargetType="CheckBox">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridCheckBoxColumn.ElementStyle>
+                </DataGridCheckBoxColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="{Binding ButtonContent_OutputCSV, Mode=OneWay, Source={StaticResource resources}}" Grid.Row="2"  FontSize="16" Command="{Binding _Model.C_OutputToCSV, Mode=OneWay}"/>
+        <Button x:Name="Button_OutputCSV" Content="{Binding ButtonContent_OutputCSV, Mode=OneWay, Source={StaticResource resources}}" Grid.Row="2"  FontSize="16" Command="{Binding _Model.C_OutputToCSV, Mode=OneWay}"/>
     </Grid>
 </Window>
