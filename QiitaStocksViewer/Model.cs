@@ -149,12 +149,12 @@ namespace QiitaStocksViewer
     }
     public class PostInformation
     {
-        public string _Title { get; set; }
+        public string _Title { get; set; } = "";
         public DateTime _PostTime { get; set; } = new DateTime();
         public DateTime _UpDatedTime { get; set; } = new DateTime();
-        public bool _LimitedShared { get; set; }
-        public Uri _URL { get; set; }
-        public StockInformation _StockInfo { get; set; }
+        public bool _LimitedShared { get; set; } = false;
+        public Uri _URL { get; set; } = new Uri("http://qiita.com/");
+        public StockInformation _StockInfo { get; set; } = new StockInformation();
         public ReactiveProperty<bool> _isPopupOpen { get; private set; } = new ReactiveProperty<bool>() { Value = false };
         public ReactiveCommand C_PopupChange { get; } = new ReactiveCommand();
         public PostInformation()
@@ -163,14 +163,18 @@ namespace QiitaStocksViewer
         }
         public class StockInformation
         {
-            public string _PostID { get; }
-            public ReactiveProperty<int> _StockCount { get; private set; } = new ReactiveProperty<int>();
+            public string _PostID { get; } = "";
+            public ReactiveProperty<int> _StockCount { get; private set; } = new ReactiveProperty<int>(0);
             public ReactiveCollection<string> _StockedPerson { get; private set; } = new ReactiveCollection<string>();
             public StockInformation(string PostID)
             {
                 _PostID = PostID;
                 getStockInfo();
             }
+            public StockInformation()
+            {
+            }
+
             private async void getStockInfo()
             {
                 Uri uri = new Uri("https://qiita.com/api/v2/items/" + _PostID + "/stockers");
