@@ -1,12 +1,6 @@
-﻿using Reactive.Bindings;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Interactivity;
 
@@ -19,16 +13,16 @@ namespace QiitaStocksViewer
         {
             get
             {
-                return (Uri)GetValue(MessageProperty);
+                return (Uri)GetValue(UriProperty);
             }
             set
             {
-                SetValue(MessageProperty, value);
+                SetValue(UriProperty, value);
             }
         }
 
         // Using a DependencyProperty as the backing store for Message.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty MessageProperty =
+        public static readonly DependencyProperty UriProperty =
             DependencyProperty.Register("uri", typeof(Uri), typeof(HyperlinkBehavior), new UIPropertyMetadata(null));
         #endregion
 

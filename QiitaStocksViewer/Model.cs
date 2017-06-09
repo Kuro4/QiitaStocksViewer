@@ -3,19 +3,12 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Reactive.Bindings;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Reactive.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using System.Windows;
-using System.Windows.Controls;
 
 
 namespace QiitaStocksViewer
