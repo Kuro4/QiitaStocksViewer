@@ -23,7 +23,7 @@ namespace QiitaStocksViewer
     public class Model
     {
         public ReactiveProperty<string> _UserID { get; set; } = new ReactiveProperty<string>();
-        public string _AccessToken { get; set; }
+        public ReactiveProperty<string> _AccessToken { get; set; } = new ReactiveProperty<string>();
         public ReactiveCollection<PostInformation> _PostList { get; } = new ReactiveCollection<PostInformation>();
         public ReactiveCommand C_GetPostList { get; } = new ReactiveCommand();
         public ReactiveCommand C_OutputToCSV { get; } = new ReactiveCommand();
@@ -44,7 +44,7 @@ namespace QiitaStocksViewer
                 string result;
                 try
                 {
-                    if (string.IsNullOrWhiteSpace(_AccessToken))
+                    if (string.IsNullOrWhiteSpace(_AccessToken.Value))
                     {
                         result = await client.GetStringAsync(uri);
                     }
@@ -54,7 +54,7 @@ namespace QiitaStocksViewer
                         request.Method = HttpMethod.Get;
                         request.RequestUri = uri;
                         request.Headers.Host = "qiita.com";
-                        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _AccessToken);
+                        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _AccessToken.Value);
                         var respons = await client.SendAsync(request);
                         result = await respons.Content.ReadAsStringAsync();
                     }
@@ -73,7 +73,7 @@ namespace QiitaStocksViewer
                         });
                     }
                 }
-                catch (HttpRequestException e)
+                catch (Exception e) when (e is HttpRequestException || e is InvalidCastException)
                 {
                     MessageBox.Show("エラーが発生しました" + Environment.NewLine
                         + "ユーザーID,AccessTokenが間違っているか、リクエスト制限を超えた可能性があります" + Environment.NewLine

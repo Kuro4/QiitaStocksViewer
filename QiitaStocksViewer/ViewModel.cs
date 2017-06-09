@@ -12,19 +12,5 @@ namespace QiitaStocksViewer
     public class ViewModel
     {
         public Model _Model { get; set; } = new Model();
-
-#if DEBUG
-        public ViewModel()
-        {
-            _Model._PostList.Add(new PostInformation()
-            {
-                _Title = "test1",
-                _PostTime = DateTime.Now,
-                _UpDatedTime = DateTime.Now,
-                _LimitedShared = true,
-                _URL = new Uri("http://qiita.com/kuro4"),
-            });
-        }
-#endif
     }
 }

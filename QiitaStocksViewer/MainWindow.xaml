@@ -40,7 +40,7 @@
             </StackPanel>
             <StackPanel x:Name="stackPanel3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
                 <TextBlock x:Name="TextBlock_AccessToken" FontSize="14" Text="{Binding title_AccessToken, Mode=OneWay, Source={StaticResource resources}}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="126" TextAlignment="Right"/>
-                <TextBox x:Name="TextBox_AccessToken" TextWrapping="Wrap" FontSize="14" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0,0,0" Text="{Binding _Model._AccessToken}"/>
+                <TextBox x:Name="TextBox_AccessToken" TextWrapping="Wrap" FontSize="14" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0,0,0" Text="{Binding _Model._AccessToken.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <CheckBox x:Name="CheckBox_isSaveAccessToken" Content="{Binding CheckBox_isSaveAccessToken, Mode=OneWay, Source={StaticResource resources}}" VerticalContentAlignment="Center" Margin="70,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="173"/>
             </StackPanel>
             <Button x:Name="Button_LoadStart" Content="{Binding ButtonContent_LoadStart, Mode=OneWay, Source={StaticResource resources}}"  FontSize="16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Background="#FF54FF54" Margin="0,20,0,0" Command="{Binding _Model.C_GetPostList, Mode=OneWay}"/>
