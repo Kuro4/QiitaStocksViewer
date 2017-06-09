@@ -22,8 +22,10 @@ namespace QiitaStocksViewer
 {
     public class Model
     {
-        public ReactiveProperty<string> _UserID { get; set; } = new ReactiveProperty<string>();
-        public ReactiveProperty<string> _AccessToken { get; set; } = new ReactiveProperty<string>();
+        public ReactiveProperty<string> _UserID { get;private set; } = new ReactiveProperty<string>();
+        public ReactiveProperty<string> _AccessToken { get;private set; } = new ReactiveProperty<string>();
+        public ReactiveProperty<string> _ItemCount { get;private set; } = new ReactiveProperty<string>("0");
+        public ReactiveProperty<string> _Contributions { get; private set; } = new ReactiveProperty<string>("0");
         public ReactiveCollection<PostInformation> _PostList { get; } = new ReactiveCollection<PostInformation>();
         public ReactiveCommand C_GetPostList { get; } = new ReactiveCommand();
         public ReactiveCommand C_OutputToCSV { get; } = new ReactiveCommand();
@@ -44,6 +46,9 @@ namespace QiitaStocksViewer
                 string result;
                 try
                 {
+                    var html = await client.GetStringAsync("http://qiita.com/" + _UserID.Value);
+                    _ItemCount.Value = ScrapeMyPage(html,XPaths.myPage_ItemCount.getXPath());
+                    _Contributions.Value = ScrapeMyPage(html, XPaths.myPage_Contributions.getXPath());
                     if (string.IsNullOrWhiteSpace(_AccessToken.Value))
                     {
                         result = await client.GetStringAsync(uri);
@@ -58,18 +63,18 @@ namespace QiitaStocksViewer
                         var respons = await client.SendAsync(request);
                         result = await respons.Content.ReadAsStringAsync();
                     }
-                    JArray data = (JArray)JsonConvert.DeserializeObject(result);
+                    var data = (JArray)JsonConvert.DeserializeObject(result);
                     _PostList.Clear();
                     foreach (JObject item in data)
                     {
-                        _PostList.Add(new PostInformation()
+                        _PostList.Add(new PostInformation(client, "http://qiita.com/" + _UserID.Value + "/items/" + item[JsonKeys.e_id.getKeyName()].ToString())
                         {
-                            _Title = item[JsonKeysEx.getKeyName(JsonKeys.e_title)].ToString(),
-                            _PostTime = ISO8601ToDateTime(item[JsonKeysEx.getKeyName(JsonKeys.e_created_at)].ToString()),
-                            _UpDatedTime = ISO8601ToDateTime(item[JsonKeysEx.getKeyName(JsonKeys.e_updated_at)].ToString()),
-                            _LimitedShared = bool.Parse(item[JsonKeysEx.getKeyName(JsonKeys.e_private)].ToString()),
-                            _URL = new Uri(item[JsonKeysEx.getKeyName(JsonKeys.e_url)].ToString()),
-                            _StockInfo = new PostInformation.StockInformation(item[JsonKeysEx.getKeyName(JsonKeys.e_id)].ToString()),
+                            _Title = item[JsonKeys.e_title.getKeyName()].ToString(),
+                            _PostTime = ISO8601ToDateTime(item[JsonKeys.e_created_at.getKeyName()].ToString()),
+                            _UpDatedTime = ISO8601ToDateTime(item[JsonKeys.e_updated_at.getKeyName()].ToString()),
+                            _LimitedShared = bool.Parse(item[JsonKeys.e_private.getKeyName()].ToString()),
+                            _URL = new Uri(item[JsonKeys.e_url.getKeyName()].ToString()),
+                            _StockInfo = new PostInformation.StockInformation(item[JsonKeys.e_id.getKeyName()].ToString(),client),
                         });
                     }
                 }
@@ -80,6 +85,12 @@ namespace QiitaStocksViewer
                         + "（リクエスト回数はIPアドレス毎に \n　認証無：60回/h \n　認証有：1000回/h \n　までです）", e.GetType().ToString());
                 }
             }
+        }
+        private string ScrapeMyPage(string html, string XPath)
+        {
+            var doc = new HtmlAgilityPack.HtmlDocument();
+            doc.LoadHtml(html);
+            return doc.DocumentNode.SelectSingleNode(XPath).InnerText;
         }
         private DateTime ISO8601ToDateTime(string dateTime)
         {
@@ -94,11 +105,13 @@ namespace QiitaStocksViewer
                 dialog.Filter = "csvファイル(*.csv)|*.csv";
                 if ((bool)dialog.ShowDialog())
                 {
-                    string str = "タイトル,ストック者数,ストック者ID,URL,投稿日,最終更新日,限定共有" + Environment.NewLine;
+                    string str = "タイトル,いいね数,ストック者数,コメント数,ストック者ID,URL,投稿日,最終更新日,限定共有" + Environment.NewLine;
                     foreach (var postInfo in _PostList)
                     {
                         str += postInfo._Title + ",";
-                        str += postInfo._StockInfo._StockCount.Value + ",\"";
+                        str += postInfo._LikeCount.Value + ",";
+                        str += postInfo._StockInfo._StockCount.Value + ",";
+                        str += postInfo._CommentCount.Value + ",\"";
                         foreach (var item in postInfo._StockInfo._StockedPerson)
                         {
                             str += item + ",";
@@ -125,31 +138,12 @@ namespace QiitaStocksViewer
             }
         }
     }
-    public enum JsonKeys
-    {
-        e_renderd_body,
-        e_body,
-        e_coediting,
-        e_created_at,
-        e_group,
-        e_id,
-        e_private,
-        e_tags,
-        e_title,
-        e_updated_at,
-        e_url,
-        e_user,
-    }
-    public class JsonKeysEx
-    {
-        public static string getKeyName(JsonKeys key)
-        {
-            return key.ToString().Remove(0, 2);
-        }
-    }
+
     public class PostInformation
     {
         public string _Title { get; set; } = "";
+        public ReactiveProperty<string> _LikeCount { get; set; } =new ReactiveProperty<string>();
+        public ReactiveProperty<string> _CommentCount { get; set; } = new ReactiveProperty<string>();
         public DateTime _PostTime { get; set; } = new DateTime();
         public DateTime _UpDatedTime { get; set; } = new DateTime();
         public bool _LimitedShared { get; set; } = false;
@@ -157,33 +151,44 @@ namespace QiitaStocksViewer
         public StockInformation _StockInfo { get; set; } = new StockInformation();
         public ReactiveProperty<bool> _isPopupOpen { get; private set; } = new ReactiveProperty<bool>() { Value = false };
         public ReactiveCommand C_PopupChange { get; } = new ReactiveCommand();
-        public PostInformation()
+        public PostInformation(HttpClient client, string url)
         {
+            ScrapePost(client, url);
             C_PopupChange.Subscribe(_ => _isPopupOpen.Value = !_isPopupOpen.Value);
         }
+        public PostInformation()
+        {
+        }
+        private async void ScrapePost(HttpClient client, string url)
+        {
+            var doc = new HtmlAgilityPack.HtmlDocument();
+            doc.LoadHtml(await client.GetStringAsync(url));
+            _LikeCount.Value = doc.DocumentNode.SelectSingleNode(XPaths.Post_LikeCount.getXPath()).InnerText;
+            _CommentCount.Value = doc.DocumentNode.SelectSingleNode(XPaths.Post_CommentCOunt.getXPath()).InnerText;
+        }
+
         public class StockInformation
         {
             public string _PostID { get; } = "";
             public ReactiveProperty<int> _StockCount { get; private set; } = new ReactiveProperty<int>(0);
             public ReactiveCollection<string> _StockedPerson { get; private set; } = new ReactiveCollection<string>();
-            public StockInformation(string PostID)
+            public StockInformation(string PostID,HttpClient client)
             {
                 _PostID = PostID;
-                getStockInfo();
+                getStockInfo(PostID,client);
             }
             public StockInformation()
             {
             }
-
-            private async void getStockInfo()
+            private async void getStockInfo(string postID,HttpClient client)
             {
-                Uri uri = new Uri("https://qiita.com/api/v2/items/" + _PostID + "/stockers");
-                var result = await new HttpClient().GetStringAsync(uri);
+                Uri uri = new Uri("https://qiita.com/api/v2/items/" + postID + "/stockers");
+                var result = await client.GetStringAsync(uri);
                 JArray data = (JArray)JsonConvert.DeserializeObject(result);
+                _StockCount.Value = data.Count();
                 foreach (JObject item in data)
                 {
-                    _StockCount.Value++;
-                    _StockedPerson.Add(item[JsonKeysEx.getKeyName(JsonKeys.e_id)].ToString());
+                    _StockedPerson.Add(item[JsonKeys.e_id.getKeyName()].ToString());
                 }
             }
         }

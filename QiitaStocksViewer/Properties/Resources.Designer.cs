@@ -107,6 +107,24 @@ namespace QiitaStocksViewer.Properties {
         }
         
         /// <summary>
+        ///   コメント数 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ColumnHeaderName_commentCount {
+            get {
+                return ResourceManager.GetString("ColumnHeaderName_commentCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   いいね数 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ColumnHeaderName_likeCount {
+            get {
+                return ResourceManager.GetString("ColumnHeaderName_likeCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   限定共有 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ColumnHeaderName_limitedShare {
@@ -166,6 +184,24 @@ namespace QiitaStocksViewer.Properties {
         public static string title_AccessToken {
             get {
                 return ResourceManager.GetString("title_AccessToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Contributions： に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string title_Contributions {
+            get {
+                return ResourceManager.GetString("title_Contributions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Items： に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string title_ItemCount {
+            get {
+                return ResourceManager.GetString("title_ItemCount", resourceCulture);
             }
         }
         

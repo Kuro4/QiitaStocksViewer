@@ -5202,4 +5202,16 @@
         ////////////////////////////////////////
 </value>
   </data>
+  <data name="title_Contributions" xml:space="preserve">
+    <value>Contributions：</value>
+  </data>
+  <data name="title_ItemCount" xml:space="preserve">
+    <value>Items：</value>
+  </data>
+  <data name="ColumnHeaderName_commentCount" xml:space="preserve">
+    <value>コメント数</value>
+  </data>
+  <data name="ColumnHeaderName_likeCount" xml:space="preserve">
+    <value>いいね数</value>
+  </data>
 </root>

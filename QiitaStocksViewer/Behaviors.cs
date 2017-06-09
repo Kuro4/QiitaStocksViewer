@@ -12,7 +12,7 @@ using System.Windows.Interactivity;
 
 namespace QiitaStocksViewer
 {
-    class HyperlinkBehavior:Behavior<Hyperlink>
+    class HyperlinkBehavior : Behavior<Hyperlink>
     {
         #region uriプロパティ
         public Uri uri

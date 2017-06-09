@@ -43,11 +43,24 @@
                 <TextBox x:Name="TextBox_AccessToken" TextWrapping="Wrap" FontSize="14" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,0,0,0" Text="{Binding _Model._AccessToken.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <CheckBox x:Name="CheckBox_isSaveAccessToken" Content="{Binding CheckBox_isSaveAccessToken, Mode=OneWay, Source={StaticResource resources}}" VerticalContentAlignment="Center" Margin="70,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="173"/>
             </StackPanel>
-            <Button x:Name="Button_LoadStart" Content="{Binding ButtonContent_LoadStart, Mode=OneWay, Source={StaticResource resources}}"  FontSize="16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Background="#FF54FF54" Margin="0,20,0,0" Command="{Binding _Model.C_GetPostList, Mode=OneWay}"/>
+            <StackPanel x:Name="stackPanel4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                <TextBlock x:Name="TextBlock_ItemCount" TextWrapping="Wrap" Text="{Binding title_ItemCount, Mode=OneWay, Source={StaticResource resources}}" FontSize="18"/>
+                <TextBlock x:Name="TextBlock_ItemCountValue" TextWrapping="Wrap" Text="{Binding _Model._ItemCount.Value}" FontSize="18"/>
+                <TextBlock x:Name="TextBlock_Contributions" TextWrapping="Wrap" Text="{Binding title_Contributions, Mode=OneWay, Source={StaticResource resources}}" FontSize="18" Padding="100,0,0,0"/>
+                <TextBlock x:Name="TextBlock_ContributionsValue" TextWrapping="Wrap" Text="{Binding _Model._Contributions.Value}" FontSize="18"/>
+            </StackPanel>
+            <Button x:Name="Button_LoadStart" Content="{Binding ButtonContent_LoadStart, Mode=OneWay, Source={StaticResource resources}}"  FontSize="16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Background="#FF54FF54" Margin="0,10,0,0" Command="{Binding _Model.C_GetPostList, Mode=OneWay}"/>
         </StackPanel>
-        <DataGrid x:Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" AlternatingRowBackground="#FFA5F9A1" SelectionUnit="CellOrRowHeader" RowHeaderWidth="40" ItemsSource="{Binding _Model._PostList}">
+        <DataGrid x:Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" AlternatingRowBackground="#FFA5F9A1" SelectionUnit="CellOrRowHeader" RowHeaderWidth="40" ItemsSource="{Binding _Model._PostList}" RowHeight="31" MinRowHeight="31">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding _Title}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_title, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding _LikeCount.Value}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_likeCount, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -75,6 +88,13 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding _CommentCount.Value}" ClipboardContentBinding="{x:Null}" Header="{Binding ColumnHeaderName_commentCount, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <DataGridTemplateColumn Header="{Binding ColumnHeaderName_url, Mode=OneWay, Source={StaticResource resources}}" IsReadOnly="True" CanUserSort="True" SortMemberPath="_URL.AbsoluteUri">
                     <DataGridTemplateColumn.CellStyle>
                         <Style TargetType="DataGridCell">
